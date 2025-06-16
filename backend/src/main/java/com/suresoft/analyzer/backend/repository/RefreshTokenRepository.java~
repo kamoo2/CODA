@@ -1,0 +1,17 @@
+package com.suresoft.analyzer.backend.repository;
+
+import com.suresoft.analyzer.backend.entity.RefreshToken;
+import com.suresoft.analyzer.backend.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, String> {
+    Optional<RefreshToken> findByToken(String token); // ✅ 토큰으로 조회
+
+    Optional<RefreshToken> findByUser(User user); // ✅ 사용자별 Refresh Token 조회
+
+    void deleteByUser(User user); // ✅ 사용자 로그아웃 시 토큰 삭제
+}

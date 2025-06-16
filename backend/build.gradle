@@ -1,0 +1,118 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.2'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.protobuf' version '0.9.4'
+}
+
+group = 'com.suresoft.analyzer'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    /* for websocket*/
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.security:spring-security-messaging'
+
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+
+    compileOnly group: 'org.apache.tomcat', name: 'annotations-api', version: '6.0.53'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //== 스프링 시큐리티 ==//
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+   // implementation 'org.thymeleaf.extras:thymeleaf-extras-spring security6'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON 파싱을 위해 추가
+
+    //swagger-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.8.5'
+
+    // Spring Boot JPA
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // H2 Database (개발 환경)
+    runtimeOnly("com.h2database:h2")
+
+    // PostgreSQL Database (운영 환경)
+    runtimeOnly("org.postgresql:postgresql")
+
+
+    // AWS SDK for S3
+    implementation 'software.amazon.awssdk:s3:2.20.40'
+
+    //ava에서 .env 파일을 쉽게 로드하고 환경 변수로 사용할 수 있도록 도와주는 라이브러리
+    implementation("io.github.cdimascio:java-dotenv:5.2.2")
+
+    // Jakarta Validation (NoSuchMethodError 방지)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+}
+
+
+
+protobuf {
+    // Protobuf 컴파일러를 지정하여 .proto 파일을 컴파일합니다.
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.29.2"
+    }
+    // 생성된 파일을 정리합니다.
+    clean {
+        delete generatedFilesBaseDir
+    }
+    // gRPC 플러그인을 설정하여 Protobuf 파일로부터 gRPC 관련 코드를 생성합니다.
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.69.0"
+        }
+    }
+
+    // 모든 프로토콜 버퍼 작업에 대해 gRPC 플러그인을 적용합니다.
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc {} // gRPC 플러그인 추가
+            }
+        }
+    }
+}
+
+// .proto 파일의 위치를 src/main/proto로 지정
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/resources/grpc'
+        }
+    }
+}

@@ -1,0 +1,111 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 8px;
+  .contentTitle {
+    margin-bottom: 10px;
+  }
+  max-height: calc(100vh - 250px); // 또는 70vh 등 적절한 높이
+  overflow-y: auto;
+}
+.nameColumn {
+  white-space: nowrap; // 줄바꿈 방지
+  overflow: hidden; // 넘친 내용 숨김
+  text-overflow: ellipsis; // ... 으로 표시
+  line-height: 1.4;
+}
+.contentHeader {
+  display: flex;
+  width: 100%;
+  border-radius: 8px;
+  padding: 0px 10px;
+  .contentDescription {
+    margin-right: 15px;
+  }
+}
+.extensionColumn {
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+.dbcFileRow {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+}
+
+.alignCenter {
+  justify-content: center;
+  align-items: center;
+}
+
+.alignLeft {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.fileName {
+  color: #ccc;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.uploadLabel {
+  display: inline-block;
+  padding: 10px;
+  background-color: #2e2e2e;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #444;
+  }
+}
+.fileNameClickable {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  padding: 0 8px;
+  font-size: 13px;
+  color: #ddd;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.dbcFileRow {
+  display: flex;
+  align-items: center; // 세로 중앙
+  justify-content: center; // 가로 중앙 ← 이거 빠졌음
+  height: 100%;
+}
+.selectedCount {
+  font-weight: normal;
+  font-size: 14px;
+  color: #888;
+  margin-left: 8px;
+}

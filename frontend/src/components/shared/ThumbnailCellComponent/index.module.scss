@@ -1,0 +1,24 @@
+.thumbnailWrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.thumbnailImage {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.tooltip {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 4px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tooltipImage {
+  width: 300px;
+  height: auto;
+  border-radius: 4px;
+}

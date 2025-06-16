@@ -1,0 +1,33 @@
+.projectContent {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #181818; // 완전 블랙보다는 살짝 밝은 톤
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); // 테두리 강조보다 자연스러운 그림자
+  display: flex;
+  flex-direction: column;
+  color: #f0f0f0; // 기본 글자색
+  border: 1px solid #2a2a2a; // 살짝 테두리 추가로 레이아웃 구분감 줌
+}
+
+.analysisSubjectDescriptor {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+  resize: vertical; /* 필요에 따라 none, both 도 가능 */
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  outline: none;
+}
+
+.analysisSubjectDescriptor::placeholder {
+  color: #888; /* 플레이스홀더는 약간 흐리게 */
+}
+
+.analysisSubjectDescriptor:focus {
+  border-color: #90caf9;
+  box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.2);
+}

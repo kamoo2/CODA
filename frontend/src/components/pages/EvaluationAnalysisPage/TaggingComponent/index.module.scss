@@ -1,0 +1,198 @@
+.projectContent {
+  padding: 20px;
+  margin: 20px 0px;
+  border-radius: 10px;
+  background-color: #181818;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  color: #f0f0f0;
+}
+
+.projectSubContent {
+  flex-grow: 1;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #202020;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.subContentTopLayout {
+  display: flex;
+}
+
+.scoreEvalResultContentLayout {
+  margin: 20px 20px 0px 0px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #202020;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  flex-direction: column;
+  max-width: 300px;
+  display: flex;
+}
+
+.subContentLayout {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.subContentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.subcontentTitle {
+  font-weight: bold;
+  display: flex;
+  color: #f0f0f0;
+}
+
+.pieChartTitle {
+  font-weight: bold;
+  width: 400px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  color: #f0f0f0;
+}
+
+.BarChartContainer {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.BarChart {
+  width: 100%;
+  height: 100%;
+  margin: 5px 30px 20px 5px;
+}
+
+/* 새로 추가된 태그 색상 버튼 */
+.tagColorButton {
+  border: 1px solid #555;
+  background-color: #2e2e2e;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.button {
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #eee;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 2px;
+}
+
+.tableContainer {
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  width: 100%;
+  background-color: #252525;
+  flex-direction: column;
+  display: flex;
+  color: #e0e0e0;
+}
+
+.tableControllerContainer {
+  margin: 10px;
+  align-items: center;
+  display: flex;
+  color: #ccc;
+}
+
+.table {
+  flex-direction: column;
+  display: flex;
+}
+
+.tableThead {
+  width: 100%;
+  display: flex;
+}
+
+.tableRow {
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #3a3a3a;
+  height: auto;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+}
+
+.tableHeader {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  color: #f0f0f0;
+}
+
+.tableHeader:hover {
+  color: #90caf9;
+}
+
+.tableBody {
+  flex-direction: column;
+  display: flex;
+}
+
+.tableData {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #ddd;
+}
+
+.criteriaCell {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #ccc;
+}
+
+.filterInput {
+  border: 1px solid #555;
+  background-color: #2e2e2e;
+  color: #eee;
+  padding: 5px;
+}
+
+.filterItem {
+  display: flex;
+}
+
+.filterContainer {
+  justify-content: center;
+  width: 30%;
+  margin: 5px;
+  display: flex;
+  color: #ccc;
+}
+
+.tablePageControllercontainer {
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  color: #ccc;
+}

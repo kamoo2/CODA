@@ -1,0 +1,33 @@
+.kebabContainer {
+  position: relative;
+}
+
+.kebabButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 2px); // 또는 bottom: 100% 사용 중이면 그대로 유지
+  right: 0;
+  z-index: 1000;
+  background-color: #222;
+  border: 1px solid #444;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.dropdownItem {
+  padding: 4px 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #333;
+  }
+}

@@ -1,0 +1,8 @@
+# Gradle wrapper (backend 폴더 안)
+backend/gradlew text eol=lf
+
+# Batch files
+backend/*.bat text eol=crlf
+
+# JAR files
+backend/*.jar binary

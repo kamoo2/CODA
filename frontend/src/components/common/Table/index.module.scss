@@ -1,0 +1,114 @@
+.tableContainer {
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  overflow-x: auto;
+  background-color: #1e1e1e; // 어두운 배경
+  color: #f0f0f0; // 기본 글씨 색
+}
+
+.table {
+  border: 1px solid #333;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  background-color: #2a2a2a; // 테이블 내부 배경
+}
+
+.tableControllerContainer {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 12px;
+  align-items: center;
+  display: flex;
+  background-color: #1e1e1e;
+}
+
+.filterInput {
+  width: 100%;
+}
+
+.tableRow {
+  border-bottom: 1px solid #333;
+}
+
+.tableHeader {
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #3a3a3a;
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.tableHeader div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tableHeader div:hover {
+  color: #00aaff; // 시원한 블루톤
+}
+
+.tableData {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  align-items: center;
+}
+
+.tablePageControllercontainer {
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  background-color: #1e1e1e;
+}
+
+button {
+  border: 2px solid #444;
+  border-radius: 3px;
+  margin: 2px;
+  padding: 2px 8px;
+  background-color: #333;
+  color: #eee;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+  border-color: #00aaff;
+  color: #00aaff;
+}

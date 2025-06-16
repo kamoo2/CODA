@@ -1,0 +1,219 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+}
+
+.headerBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6; // Tailwind blue-500 느낌
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  color: $white;
+}
+
+.createButton {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.createButton:hover {
+  background-color: #1e40af;
+}
+.tableWrapper {
+  width: 100%;
+  font-size: 14px;
+  user-select: none;
+}
+
+// 공통 그리드 구조
+.tableGridHeader .gridRow,
+.tableGridRow {
+  display: grid;
+  grid-template-columns: 5% 55% 20% 20%; // ✅ 원하는 비율로 설정
+  align-items: center;
+}
+
+// 셀 스타일 공통
+.cell {
+  padding: 8px 16px;
+}
+
+// 헤더 전용 스타일
+.tableGridHeader {
+  .gridRow {
+    background-color: $dark;
+    color: $white;
+    font-weight: 600;
+    font-size: 16px;
+    border-bottom: 1px solid $gray;
+  }
+}
+
+// Row 전용 스타일
+.tableGridRow {
+  border-bottom: 1px solid #333;
+}
+
+.activeRow {
+  background-color: #181818;
+  border-bottom: 1px solid $white;
+}
+
+.row:hover {
+  background-color: #181818;
+  border-radius: 4px;
+}
+
+.projectName {
+  color: $white;
+}
+
+.createdAt {
+  color: #6b7280;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.statusRunning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusComplete {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.statusStop {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.expandedFullCell {
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.expandedBox {
+  width: 100%;
+  color: $white;
+  background-color: #181818;
+  border-left: 2px solid $white;
+}
+
+.loading,
+.error {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+.error {
+  color: red;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: none;
+  }
+}
+
+.disabled {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+  color: $gray;
+}
+
+.playBtn,
+.moreBtn,
+.deleteBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.playBtn {
+  color: #3b82f6;
+}
+
+.moreBtn {
+  color: #3b82f6;
+}
+
+.deleteBtn {
+  color: #ef4444;
+}
+
+.playBtn:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.moreBtn:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.deleteBtn:hover {
+  background-color: rgba(239, 68, 68, 0.1); // red
+}
+
+.dropdownMenu {
+  background-color: #1f1f1f;
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 160px;
+}
+
+.dropdownItem {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #333;
+  }
+}

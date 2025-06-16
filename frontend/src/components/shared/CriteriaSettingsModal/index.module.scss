@@ -1,0 +1,42 @@
+.modalLayout {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.tableContainer {
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  background-color: #252525; // 테이블 배경
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+}
+
+.tabContainer {
+  display: flex;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #444;
+}
+
+.tabButton {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #aaa;
+}
+
+.tabButton:hover {
+  background-color: #222;
+}
+
+.activeTab {
+  border-bottom: 2px solid #4fa3ff;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1a1a1a;
+}

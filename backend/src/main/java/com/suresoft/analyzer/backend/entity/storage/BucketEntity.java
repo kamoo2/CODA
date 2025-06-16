@@ -1,0 +1,63 @@
+package com.suresoft.analyzer.backend.entity.storage;
+
+import com.suresoft.analyzer.backend.entity.auth.UserEntity;
+import com.suresoft.analyzer.backend.entity.system.ParserEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "BUCKET")
+public class BucketEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    // bucket 이름은 유니크해야함
+    @Column(name="name", nullable = false, unique = true)
+    private String name;
+
+    @Column(name="region", nullable = false)
+    private String region;
+
+    @Column(name="access_key", nullable = false)
+    private String accessKey;
+
+    @Column(name="secret_key", nullable = false)
+    private String secretKey;
+
+    @Column(name="created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = true)
+    private UserEntity user;
+
+//    @Column(name="is_used", nullable = false)
+//    private Boolean isUsed;
+
+
+    public BucketEntity(String encryptedAccessKey, String encryptedSecretKey, String region, String name, UserEntity user, Boolean isUsed) {
+        this.accessKey = encryptedAccessKey;
+        this.secretKey = encryptedSecretKey;
+        this.region = region;
+        this.name = name;
+        this.user = user;
+        //this.isUsed = isUsed;
+    }
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+}

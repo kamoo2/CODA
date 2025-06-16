@@ -1,0 +1,279 @@
+package com.suresoft.analyzer.backend.service;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.suresoft.analyzer.backend.dto.storage.BucketDto;
+import com.suresoft.analyzer.backend.entity.auth.UserEntity;
+import com.suresoft.analyzer.backend.entity.storage.BucketEntity;
+import com.suresoft.analyzer.backend.exception.ApiException;
+import com.suresoft.analyzer.backend.exception.ErrorCode;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
+import com.suresoft.analyzer.backend.repository.storage.BucketRepository;
+import javax.swing.text.html.Option;
+import java.net.URI;
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+@Service
+public class S3Service {
+    private final SecureStorageService secureStorageService;
+    private S3Client s3Client;
+    private String wasabiEndpoint = "https://s3.ap-northeast-1.wasabisys.com"; // 도쿄 리전
+    private final BucketRepository repository;
+
+    public S3Service(SecureStorageService secureStorageService, BucketRepository repository) {
+        this.secureStorageService = secureStorageService;
+        this.repository = repository;
+    }
+
+    /**
+     * AWS Credentials 검증 (Access Key & Secret Key가 올바른지 확인)
+     */
+    public void validateCredentials(String accessKey, String secretKey) {
+        try {
+            // Wasabi S3 클라이언트 생성 (도쿄 리전)
+            S3Client tempS3Client = S3Client.builder()
+                    .credentialsProvider(StaticCredentialsProvider.create(
+                            AwsBasicCredentials.create(accessKey, secretKey)))
+                    .endpointOverride(URI.create(wasabiEndpoint)) // Wasabi 리전별 엔드포인트 사용
+                    .region(Region.AP_NORTHEAST_1) // 도쿄 리전 지정
+                    .build();
+
+            // 버킷 목록 가져오기 (권한 테스트)
+            ListBucketsResponse response = tempS3Client.listBuckets(ListBucketsRequest.builder().build());
+
+        } catch (S3Exception e) {
+            // 예외 발생
+            throw new ApiException(ErrorCode.INVAILD_STORAGE);
+        } catch (Exception e) {
+            // 다른 예외 발생
+            throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public List<String> getBucketNameList(String accessKey, String secretKey, String regionStr) {
+        try {
+            AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+            Region region = Region.of(regionStr);
+            String endpoint = String.format("https://s3.%s.wasabisys.com", regionStr);
+
+            S3Client s3Client = S3Client.builder()
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                    .endpointOverride(URI.create(endpoint))
+                    .region(region)
+                    .build();
+
+            ListBucketsResponse response = s3Client.listBuckets();
+
+            return response.buckets().stream()
+                    .map(Bucket::name)  // 이름만 추출
+                    .collect(Collectors.toList());
+
+        } catch (S3Exception e) {
+            throw new ApiException(ErrorCode.INVAILD_STORAGE);
+        } catch (Exception e) {
+            throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /**
+     * AWS Key를 암호화하여 저장
+     */
+    public void setAwsCredentials(String accessKey, String secretKey, String region, String name, UserEntity user) {
+        // Access Key & Secret Key 암호화 후 저장
+        String encryptedAccessKey = secureStorageService.encrypt(accessKey);
+        String encryptedSecretKey = secureStorageService.encrypt(secretKey);
+
+        //기존 동일한 버킷이 있는지 확인 (중복 방지)
+        Optional<BucketEntity> existingBucket = repository.findByName(name);
+        if (existingBucket.isPresent()) {
+            throw new ApiException(ErrorCode.INVAILD_STORAGE ,"이미 저장되어있는 버킷입니다.");
+        }
+
+        //새로운 BucketEntity 생성 및 저장
+        BucketEntity bucket = new BucketEntity(encryptedAccessKey, encryptedSecretKey, region, name, user);
+        repository.save(bucket);
+
+    }
+
+
+    public List<BucketDto> getUserBuckets(UserEntity user) {
+        // 여러 결과를 받을 수 있도록 수정
+        List<BucketEntity> buckets = repository.findAllByUserId(user.getId());
+
+        return buckets.stream()
+                .map(bucket -> new BucketDto(
+                        bucket.getId(),
+                        bucket.getName(),
+                        bucket.getRegion(),
+                        secureStorageService.getDecryptedValue("accessKey", bucket.getAccessKey()),
+                        secureStorageService.getDecryptedValue("secretKey", bucket.getSecretKey()),
+                        bucket.getCreatedAt()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    // BucketDto 기반으로 버킷 디테일을 가져오는 메서드
+    public BucketDto getBucketDetailByName(UserEntity user, String bucketId) {
+        // 사용자 ID와 버킷 이름을 기준으로 단일 결과 조회
+        BucketEntity bucket = repository.findByUserIdAndId(user.getId(), bucketId);
+
+        if (bucket  == null) {
+            throw new IllegalStateException(" 해당 이름의 버킷을 찾을 수 없음: " + bucketId);
+        }
+
+        // BucketEntity를 BucketDto로 변환해서 반환
+        return new BucketDto(
+                bucket.getId(),
+                bucket.getName(),
+                bucket.getRegion(),
+                secureStorageService.getDecryptedValue("accessKey", bucket.getAccessKey()),
+                secureStorageService.getDecryptedValue("secretKey", bucket.getSecretKey()),
+                bucket.getCreatedAt()
+        );
+    }
+
+
+
+
+    /**
+     * 저장된 Key를 복호화하여 S3Client 설정
+     */
+    public void initializeS3Client(String bucketName) {
+        Optional<BucketEntity> bucketOptional = repository.findByName(bucketName);
+
+        if (bucketOptional.isEmpty()) {
+            throw new IllegalStateException(" 해당 이름의 버킷을 찾을 수 없음: " + bucketName);
+        }
+
+        BucketEntity bucket = bucketOptional.get();
+        String accessKey = secureStorageService.getDecryptedValue("accessKey",bucket.getAccessKey());
+        String secretKey = secureStorageService.getDecryptedValue("secretKey",bucket.getSecretKey());
+
+        this.s3Client = S3Client.builder()
+                .endpointOverride(URI.create(wasabiEndpoint))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKey, secretKey)
+                ))
+                .region(Region.AP_NORTHEAST_1)
+                .build();
+
+        System.out.println(" Wasabi Storage 연결 완료 (" + bucketName + ")");
+    }
+
+    /**
+     * 특정 Wasabi Storage 버킷에서 폴더(디렉토리) 목록 가져오기
+     */
+    public Set<String> listFolders(String bucketName, String prefix) {
+        if (s3Client == null) {
+            initializeS3Client(bucketName);
+        }
+
+        ListObjectsV2Request listRequest = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .delimiter("/")
+                .fetchOwner(true) // Owner(생성한 사람) 정보 가져오기
+                .build();
+
+
+        ListObjectsV2Response listResponse = s3Client.listObjectsV2(listRequest);
+
+
+        return listResponse.commonPrefixes().stream()
+                .map(CommonPrefix::prefix)
+                .map(folder -> folder.replaceAll("/$", ""))
+                .collect(Collectors.toSet());
+    }
+
+
+    public String getBucketAndObjectsInfoAsJson(String bucketName, String prefix) throws Exception {
+        if (s3Client == null) {
+            initializeS3Client(bucketName);
+        }
+
+        // JSON 변환을 위한 ObjectMapper 생성
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode rootNode = objectMapper.createObjectNode();
+
+        // 🔹 버킷 소유자 및 크기 가져오기
+        GetBucketAclResponse bucketAclResponse = s3Client.getBucketAcl(
+                GetBucketAclRequest.builder().bucket(bucketName).build()
+        );
+        rootNode.put("bucketName", bucketName);
+        rootNode.put("bucketOwner", bucketAclResponse.owner().displayName());
+        rootNode.put("bucketSize", getBucketSize(bucketName));
+
+        // 🔹 파일 목록 JSON 트리 구조 생성
+        ObjectNode filesNode = objectMapper.createObjectNode();
+        Map<String, ObjectNode> folderMap = new HashMap<>();
+        folderMap.put("", filesNode); // 루트 폴더
+
+        ListObjectsV2Request listRequest = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .fetchOwner(true)
+                .build();
+        ListObjectsV2Response listResponse = s3Client.listObjectsV2(listRequest);
+
+        for (S3Object s3Object : listResponse.contents()) {
+            String filePath = s3Object.key(); // 파일의 전체 키(경로명)
+            String[] pathParts = filePath.split("/");
+            ObjectNode parent = filesNode;
+            StringBuilder currentPath = new StringBuilder();
+
+            // 🔹 폴더 구조를 생성 (재귀 없이)
+            for (int i = 0; i < pathParts.length - 1; i++) {
+                currentPath.append(pathParts[i]).append("/");
+
+                // Key가 없을 때만 값 추가 (폴더 구조 유지)
+                folderMap.putIfAbsent(currentPath.toString(), objectMapper.createObjectNode());
+                parent.set(pathParts[i], folderMap.get(currentPath.toString()));
+                parent = folderMap.get(currentPath.toString());
+            }
+
+            // 🔹 파일 정보 추가
+            ObjectNode fileNode = objectMapper.createObjectNode();
+            fileNode.put("filePath", filePath);  // 파일의 전체 경로명
+            fileNode.put("owner", s3Object.owner() != null ? s3Object.owner().displayName() : "Unknown");
+            fileNode.put("lastModified", s3Object.lastModified().toString());
+            fileNode.put("fileSize", s3Object.size());
+
+            // 마지막 요소가 파일명
+            parent.set(pathParts[pathParts.length - 1], fileNode);
+        }
+
+        rootNode.set("files", filesNode);
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+    }
+
+
+    public long getBucketSize(String bucketName) {
+        long totalSize = 0;
+        ListObjectsV2Request request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .build();
+
+        ListObjectsV2Response response;
+        do {
+            response = s3Client.listObjectsV2(request);
+            totalSize += response.contents().stream()
+                    .mapToLong(S3Object::size)
+                    .sum();
+            request = request.toBuilder()
+                    .continuationToken(response.nextContinuationToken())
+                    .build();
+        } while (response.isTruncated());
+
+        return totalSize;
+    }
+
+}

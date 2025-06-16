@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "ScriptHost"],
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types"],
+
+    /* Emit */
+    "outDir": "./dist",
+    "sourceMap": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": true, // 암시적 'any' 타입 금지
+    "strictNullChecks": true, // 엄격한 null 타입 검사
+    "forceConsistentCasingInFileNames": true, // 파일명 대소문자 일관성 검사
+
+    /* Completeness */
+    "skipLibCheck": true, // 라이브러리 타입 검사 SKIP
+    "resolveJsonModule": true // JSON 파일을 모듈로 가져오기 허용
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"], // 포함할 파일
+  "exclude": ["node_modules", "dist", "build"] // 제외할 파일
+}

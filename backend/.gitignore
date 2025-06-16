@@ -1,0 +1,7 @@
+# 환경 변수 파일
+.env
+
+# AWS 보안 키 파일 무시
+secure_keys.properties
+
+#src/main/java/com/suresoft/analyzer/backend/config/SwaggerConfig.java

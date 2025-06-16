@@ -1,0 +1,126 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  color: white;
+}
+
+.filesContainer {
+  width: 180px;
+  height: 100%;
+  padding: 12px 8px;
+  border-right: 1px solid $gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.fileItem {
+  width: 100%;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 16px 8px;
+  user-select: none;
+  cursor: pointer;
+  transition: 200ms;
+
+  &:hover {
+    background-color: $blue-900;
+  }
+}
+.statusInline {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  background-color: #fef08a; // 진한 연노랑
+  color: #78350f; // 어두운 갈색 계열
+  border: 1px solid #facc15;
+  border-radius: 6px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.statusInlineComplete {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  background-color: #bbf7d0;
+  color: #166534;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.icon {
+  font-size: 14px;
+}
+
+.viewerContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileItem.selected {
+  background-color: $blue-900;
+}
+
+.placeholder {
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #ccc;
+  text-align: center;
+  padding: 2rem;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.visibleIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  visibility: visible;
+}
+
+.hiddenIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

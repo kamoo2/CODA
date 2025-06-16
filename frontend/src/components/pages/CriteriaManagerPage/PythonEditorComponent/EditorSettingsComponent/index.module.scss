@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
+.contentContainer {
+  display: flex;
+  width: 100%;
+}
+.logOutput {
+  background: #111;
+  padding: 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  color: #0f0;
+}

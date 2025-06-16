@@ -1,0 +1,56 @@
+package com.suresoft.analyzer.backend.service;
+
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Service;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.function.Function;
+
+@Service
+public class JwtService {
+    private static final String SECRET_KEY = "your-very-secure-secret-key-which-should-be-very-long"; // ✅ 환경변수로 관리 추천
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간 (단위: 밀리초)
+
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
+
+    // JWT 토큰 생성
+    public String generateToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)  // 토큰 대상 (사용자 이메일)
+                .setIssuedAt(new Date())  // 발급 시간
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))  // 만료 시간
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)  // 서명
+                .compact();
+    }
+
+    // 토큰에서 사용자 이메일 추출
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    // 토큰 유효성 검사
+    public boolean isTokenValid(String token, String userEmail) {
+        final String extractedEmail = extractUsername(token);
+        return (extractedEmail.equals(userEmail) && !isTokenExpired(token));
+    }
+
+    // 토큰 만료 여부 확인
+    private boolean isTokenExpired(String token) {
+        return extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    // 특정 클레임(Claim) 추출 메서드
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claimsResolver.apply(claims);
+    }
+}

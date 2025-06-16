@@ -1,0 +1,35 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltipText {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  max-width: 400px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px;
+  position: absolute;
+  z-index: 9999;
+
+  /* ✅ 아래로 표시 */
+  top: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  transition: opacity 0.3s;
+  white-space: pre-line;
+
+  line-height: 1.6;
+}
+
+/* 아이콘 위에 마우스 올렸을 때 툴팁 나타내기 */
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}

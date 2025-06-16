@@ -1,0 +1,27 @@
+package com.suresoft.analyzer.backend.dto.storage;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class BucketDto {
+
+    private String id;
+    private String name;
+    private String region;
+    private String accessKey;
+    private String secretKey;
+
+
+    @JsonIgnoreProperties
+    private LocalDateTime createdAt;
+
+    //private Boolean isUsed;
+}

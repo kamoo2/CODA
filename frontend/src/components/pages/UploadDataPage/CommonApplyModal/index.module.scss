@@ -1,0 +1,33 @@
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 4px;
+}
+
+.extensionText {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.parserSelect {
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.contentDescription {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#InfoTooltip {
+  margin-left: 45px;
+}

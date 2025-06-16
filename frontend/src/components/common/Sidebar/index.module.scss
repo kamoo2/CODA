@@ -1,0 +1,79 @@
+.sidebar {
+  position: relative;
+  background: $dark;
+  border-right: 1px solid $gray;
+  user-select: none;
+  padding: 20px 8px 20px 4px; // ✅ 오른쪽 여유 확보
+  overflow: hidden; // ✅ 가로 스크롤 방지
+}
+.sidebarInner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.scrollWrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  position: relative; // ✅ resizeHandle absolute용
+}
+
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: ew-resize;
+  z-index: 1;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: $white;
+  margin-bottom: 70px;
+  position: relative;
+  flex: 0 0 auto;
+  .logoIcon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logoTitle {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .collapsed {
+    line-height: 48px;
+  }
+
+  .collapsedBtn {
+    width: 32px;
+    height: 32px;
+    background-color: $dark;
+    border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    right: 0; // ✅ 사이드바 안쪽 끝에 붙이고
+    transform: translateX(50%); // ✅ 살짝 바깥으로 "보이게"
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

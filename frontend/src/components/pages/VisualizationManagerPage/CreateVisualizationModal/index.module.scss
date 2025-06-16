@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    p {
+      background-color: #1e1e1e;
+      padding: 8px 0;
+      color: $white;
+      line-height: 1.4;
+      padding: 8px;
+    }
+  }
+
+  .btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    .startNowBtn,
+    .startLaterBtn {
+      padding: 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .startNowBtn {
+      background-color: $blue-900;
+    }
+
+    .startLaterBtn {
+      border: 1px solid $gray;
+    }
+  }
+}

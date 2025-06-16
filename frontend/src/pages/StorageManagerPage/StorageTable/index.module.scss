@@ -1,0 +1,269 @@
+.tableContainer {
+  padding: 1rem;
+  color: #ddd;
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #444;
+}
+
+.customTable tbody {
+  min-height: 100%;
+  display: block;
+}
+
+.headerText {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.checkboxCell {
+  text-align: center;
+}
+
+.leftAlign {
+  justify-content: flex-start;
+}
+
+.customTable thead,
+.customTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.customTable thead {
+  background-color: #222;
+  color: #ddd;
+}
+
+.customTable th {
+  padding: 12px;
+  border: 1px solid #444;
+  text-align: center;
+}
+
+.customTable tbody tr {
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.customTable tbody tr:hover {
+  background-color: #333;
+}
+
+.customTable td {
+  padding: 12px;
+  border: 1px solid #444;
+}
+
+.customTable tbody tr:last-child {
+  border-bottom: none;
+}
+.customTable th:nth-child(n + 1),
+.customTable td:nth-child(n + 1) {
+  text-align: center !important;
+}
+.customTable th:nth-child(1),
+.customTable td:nth-child(1) {
+  width: 45px;
+}
+
+.customTable th:nth-child(3),
+.customTable td:nth-child(3) {
+  width: 80px;
+}
+.customTable th:nth-child(4),
+.customTable td:nth-child(4) {
+  width: 170px;
+}
+
+.customTable th:nth-child(5),
+.customTable td:nth-child(5) {
+  width: 170px;
+}
+
+.customTable th:nth-child(6),
+.customTable td:nth-child(6) {
+  width: 230px;
+}
+
+.customTable th:nth-child(7),
+.customTable td:nth-child(7) {
+  width: 100px;
+}
+
+.iconWrapper {
+  margin-right: 6px;
+}
+
+.searchInput {
+  width: 220px;
+  height: 40px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 14px;
+
+  outline: none;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &:focus {
+    background-color: #444;
+  }
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.ellipsisCell {
+  max-width: 180px; // 또는 원하는 크기로
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  position: relative;
+}
+
+.filterOptions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.viewToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filterOption {
+  cursor: pointer;
+  color: #bbb;
+  font-weight: 500;
+  margin-right: 10px;
+  margin-left: 10px;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.active {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.separator {
+  color: #888;
+}
+
+.table {
+  border: 1px solid #333;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  background-color: #2a2a2a; // 테이블 내부 배경
+}
+
+.tableControllerContainer {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 12px;
+  align-items: center;
+  display: flex;
+  background-color: #1e1e1e;
+}
+
+.filterInput {
+  width: 100%;
+}
+
+.tableRow {
+  border-bottom: 1px solid #333;
+}
+
+.tableHeader div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tableHeader div:hover {
+  color: #00aaff; // 시원한 블루톤
+}
+
+.tableData {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  align-items: center;
+}
+
+.tablePageControllercontainer {
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  background-color: #1e1e1e;
+}
+
+button {
+  border: 2px solid #444;
+  border-radius: 3px;
+  margin: 2px;
+  padding: 2px 8px;
+  background-color: #333;
+  color: #eee;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+  border-color: #00aaff;
+  color: #00aaff;
+}

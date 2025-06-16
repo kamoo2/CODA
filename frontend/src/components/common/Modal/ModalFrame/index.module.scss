@@ -1,0 +1,199 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px); // 🔥 블러 효과
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 2px solid $navy;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+  color: $white;
+  padding: 16px;
+  z-index: 9999;
+
+  // 여기에만 스크롤 스타일 적용됨
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .closeBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: transparent;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    svg {
+      font-size: 16px;
+    }
+  }
+}
+
+.description {
+  color: #9ca3af;
+  padding: 8px 0 12px 0;
+  border-bottom: 1px solid $navy;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modalContent {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+.stepProgress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  position: relative;
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+    .circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      background-color: #111;
+      position: relative;
+      z-index: 2;
+    }
+
+    .label {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    &.active {
+      .circle {
+        border-color: #1e90ff;
+        background-color: #1e90ff;
+      }
+
+      .label {
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+
+    &.completed .circle {
+      border-color: #1e90ff;
+      background-color: #1e90ff;
+    }
+
+    &.completed .label {
+      color: #1e90ff;
+      font-weight: bold;
+    }
+
+    // 선 연결
+    &::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background-color: #444;
+      z-index: 1;
+    }
+
+    &:last-child::after {
+      display: none;
+    }
+  }
+}
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  button {
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+  }
+  .back {
+    background-color: $blue-900;
+    color: white;
+    padding: 8px 16px;
+    margin-left: auto;
+    margin-right: 8px;
+    border-radius: 4px;
+  }
+
+  .cancel {
+    background-color: $white;
+    color: $dark;
+  }
+
+  .ok {
+    background-color: $blue-900;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+
+    &:disabled {
+      background-color: #333;
+      cursor: default;
+    }
+  }
+}

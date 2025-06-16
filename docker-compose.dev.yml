@@ -1,0 +1,46 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./infra/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  rerun-viewer:
+    build:
+      context: ./infra/rerun
+    container_name: rerun-viewer
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/rerun/entrypoint.sh:/rerun/entrypoint.sh:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./infra/nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      - C:/coda/rrd:/data/rrd:ro
+      - C:/coda/dbc:/data/dbc:ro
+      - C:/coda/curation:/data/curation:ro
+    depends_on:
+      - mqtt
+      - rerun-viewer
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: coda-network
+    driver: bridge

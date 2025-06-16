@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  width: 100%;
+}
+.deleteIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  flex-direction: row-reverse;
+}
+.parserCell,
+.dbcFileCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; // 또는 center로 정렬 조정
+  gap: 8px;
+}
+select {
+  width: 160px;
+  height: 32px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+select:disabled {
+  width: 160px;
+  height: 32px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #181818;
+}
+
+.dbcFileRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dbcFileRow {
+  display: flex;
+  align-items: center;
+
+  select {
+    width: 100%;
+    min-width: 180px; // 너비 최소 지정 (필요 시)
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+.tabButton {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #aaa;
+  width: 250px;
+}
+
+.tabButton:hover {
+  background-color: #222;
+}
+
+.activeTab {
+  border-bottom: 2px solid #4fa3ff;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1a1a1a;
+}
+.sectionGap {
+  height: 16px;
+}

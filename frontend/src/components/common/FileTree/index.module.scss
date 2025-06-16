@@ -1,0 +1,15 @@
+.fileTreeContainer {
+  padding: 12px;
+  width: 100%;
+  max-width: 270px;
+  user-select: none;
+}
+
+.fileTreeContainer :global(.ant-tree-node-content-wrapper) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+  padding: 0;
+}

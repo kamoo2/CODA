@@ -1,0 +1,17 @@
+.menu {
+  font-weight: 700;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  li.menu.collapsed {
+    line-height: 46px !important;
+    padding: 0 11px !important;
+  }
+
+  li.submenu.collapsed > div {
+    line-height: 46px !important;
+    padding: 0 11px !important;
+  }
+}

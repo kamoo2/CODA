@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.selectAll {
+  margin-bottom: 8px;
+  color: #eee;
+}
+
+.checkListContainer {
+  overflow-y: auto;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 8px;
+  background-color: #2e2e2e;
+}
+
+.emptyMessage {
+  color: #aaa;
+  padding: 10px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  color: #eee;
+}
+
+.itemName {
+  margin-left: 8px;
+  flex: 1;
+}
+
+.itemBadge {
+  background-color: #ccc; // 기본값, JS에서 동적으로 override 가능
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: #000;
+  margin-left: 8px;
+  font-size: 1rem;
+}

@@ -1,0 +1,64 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./infra/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  rerun-viewer:
+    build:
+      context: ./infra/rerun
+    container_name: rerun-viewer
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/rerun/entrypoint.sh:/rerun/entrypoint.sh:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./infra/nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - /mnt/coda/rrd:/data/rrd:ro
+      - /mnt/coda/dbc:/data/dbc:ro
+      - /mnt/coda/curation:/data/curation:ro
+    depends_on:
+      - mqtt
+      - rerun-viewer
+    restart: unless-stopped
+    networks:
+      - app-network
+      
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dcatdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: coda-network
+    driver: bridge
+    
+volumes:
+  pgdata:
